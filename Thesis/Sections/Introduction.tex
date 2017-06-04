@@ -1,62 +1,10 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Introduction} \label{introduction}
-%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}\label{sec:introduction}
+The way software is currently developed is largely different from just a few years ago. From the advent of new languages, frameworks and methodologies, the way software is started, developed and maintained has dramatically shifted from what it was. Therefore, developers need to be able to keep up with the evolution, which requires consulting the documentation, understanding new principles, and in the end being able to be productive. 
 
-\subsection{General issues}
+This process is not only straining, it is also time consuming. This is due to the fact that the developer has to consult the documentation to understand new concepts as well as watch out for breaking changes that may be introduced at a moments notice. 
 
-Latex is not so complex. If you aren't familiar with it just spend some time in googling for latex commands (e.g. font formats, tables, figures, items,\dots).
+Luckily in the current age there are multiple ways to obtain information. From simple web searches, all the way to forums and Q\&A websites such as Stack Overflow, the developer in question is able to quickly understand what steps have to be taken in order to correct possible bugs, or to altogether prepare for major version changes. 
 
-\subsection{Getting started}
-In order to use the bachelor thesis template, be sure that the following files are present in your working directory:
-\begin{itemize}
-\item usiinfbachelorproject.cls (The latex template)
-\item logo-info.pdf (The logo figure)
-\item references.bib (The references file)\\
-\end{itemize}
+This availability of information can be a double edged sword. Where in the majority of cases a developer may be able to solve issues quickly because someone may already have encountered, there may be situations where the solution may be buried inside documents that do not directly treat the topic at hand. This causes the developer to be overloaded with information that is not pertinent to the task at hand, causing her to be less productive.
 
-\subsection {Compilation issues}
-
-If you are not familiar with Tex, I advise you to download TexShop for Mac OS.\\
-To include the references and display them in the final pdf, you have first to typeset this file with \textit{LaTex} (ComboBox upper left, if you use TexShop), then with \textit{BibTex} and finally again with \textit{LaTex}.\\
-In order to resolve figures/table/\dots~references you have to run 2 times the (latex) typeset.
-
-\subsection {Document structure}
-
-Some basic sections:
-\begin{itemize}
-\item Introduction (including Motivation)
-\item State of the Art
-\item Project requirements and analysis
-\item Project design (top-down)
-\item Implementation issues (bottom-up)
-\item Tests (methodology, results, comments)
-\item Conclusions and future work or possible developments
-\end{itemize} 
-
-\subsection {Some examples}
-
-\textbf{Figure ~\ref{fig:USILogo}} shows how to insert figures in the document.
-
-\begin{figure} [h]
-\centering
-\includegraphics[width=0.5\textwidth]{Other/logo-info.pdf}
-\caption{Caption of the figure}
-\label{fig:USILogo}
-\end{figure}
-
-\noindent\textbf{Table ~\ref{tab:numbers}} shows how to insert tables in the document.
-
-\begin{table}[h]
-\centering
-\scalebox {0.8} {
-\begin{normalsize}\begin{tabular}{l|lll}
-\textbf{Col 1} & \textbf{Col 2} & \textbf{Col 3} & \textbf{Col 4}\\
-\hline
-1 & 2 & 3 & Goofy\\
-4 & 5 & 6 & Mickey
-\end{tabular}
-\end{normalsize}
-}
-\caption{Caption of the table}
-\label{tab:numbers}
-\end{table}
+The goal of this project is to develop a tool that is able to summarise the contents of a page, and integrating it into the LIBRA\cite{Ponz2017a} recommender. This will allow the developer to choose the amount of information she may like to see, going from the entire contents, all the way to seeing only one paragraph of the document. The strategy consists in taking an algorithm such as LexRank, augmenting it in order to support the heterogeneous nature of development artefacts, which may not only include text, but also code.
