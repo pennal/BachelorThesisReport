@@ -1,12 +1,119 @@
 \documentclass[a4paper]{usiinfbachelorproject}
 
 \captionsetup{labelfont={bf}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% PACKAGES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{todonotes}
+\usepackage{float}
 
+\usepackage[cache=false]{minted}
+
+\usepackage[T1]{fontenc}
+%\usepackage{moreverb}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%% CUSTOM COMMANDS %%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\projectName}{\_\_PROJECT\_\_NAME\_\_}
 
+\usemintedstyle{xcode}
+
+
+\newmintedfile[tsfile]{ts}{
+linenos,
+tabsize=4,
+frame=lines,
+breaklines=true,
+xleftmargin=20pt
+}
+
+\newminted[tscode]{ts}{
+linenos,
+frame=lines,
+tabsize=4,
+breaklines=true,
+xleftmargin=20pt
+}
+
+\newmintinline[ts]{ts}{
+linenos,
+frame=lines,
+breaklines=true,
+xleftmargin=20pt
+}
+
+%%%%%%%%% HTML
+
+\newmintedfile[htmlfile]{html}{
+linenos,
+tabsize=4,
+frame=lines,
+breaklines=true,
+xleftmargin=20pt
+}
+
+\newminted[htmlcode]{html}{
+linenos,
+frame=lines,
+tabsize=4,
+breaklines=true,
+xleftmargin=20pt
+}
+
+\newmintinline[html]{html}{
+linenos,
+frame=lines,
+breaklines=true,
+xleftmargin=20pt
+}
+
+%%%%%%%%% JSON
+
+\newmintedfile[jsonfile]{json}{
+linenos,
+tabsize=4,
+frame=lines,
+breaklines=true,
+xleftmargin=20pt
+}
+
+\newminted[jsoncode]{json}{
+linenos,
+frame=lines,
+tabsize=4,
+breaklines=true,
+xleftmargin=20pt
+}
+
+\newmintinline[json]{json}{
+linenos,
+frame=lines,
+breaklines=true,
+xleftmargin=20pt
+}
+
+\newmintedfile[scalafile]{scala}{
+linenos,
+tabsize=4,
+frame=lines,
+breaklines=true,
+xleftmargin=20pt
+}
+
+\newminted[scalacode]{scala}{
+linenos,
+frame=lines,
+tabsize=4,
+breaklines=true,
+xleftmargin=20pt
+}
+
+\newmintinline[scala]{scala}{
+linenos,
+frame=lines,
+breaklines=true,
+xleftmargin=20pt
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -40,69 +147,16 @@ An abstract describing what the prospectus is all about. ``Omit needless words''
 
 % Chapters
 %\input{Sections/explanation}
-%\input{Sections/Introduction.tex}
-%\input{Sections/StateOfTheArt.tex}
-%\input{Sections/ProjectRequirementsAndAnalysis.tex}
-%\input{Sections/ProjectDesign.tex}
-%\input{Sections/ImplementationIssues.tex}
-%\input{Sections/Tests.tex}
-%\input{Sections/Conclusion.tex}
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%% OUTLINE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Introduction}
-\begin{itemize}
-\item Introduce the problem
-\begin{itemize}
-\item fast release cycle frameworks, etc
-\item Developers need to keep up
-\item Describe the whole document (structure)
-\end{itemize}
-\item Many sources for info, overload
-\item Create summarizer to reduce load
-\end{itemize}
-\section{State of the art}
-\begin{itemize}
-\item papers on summarization
-\end{itemize}
-\section{Project requirements and analysis}
-\subsection{Challenges}
-\begin{itemize}
-	\item Difference in websites
-\item Keep code intact
-\item Aggregation of multiple pages?
-\end{itemize}
-
-\subsection{Algorithm Overview}
-\begin{itemize}
-\item Explain LexRank, HoliRank
-\item Explain similarity function
-\item Explain how the challenges were solved
-\end{itemize}
-
-\section{\projectName}
-\subsection{Overview}
-\subsection{Architecture}
-\subsubsection{Parser}
-\subsubsection{Service}
-\begin{itemize}
-	\item Stormed service
-\item HoliRank
-\end{itemize}
-\subsubsection{Browser Extension}
-
-
-\section{Implementation Issues}
-\subsection{Limitations of approach}
-\begin{itemize}
-\item Chunks are discarded, text itself not summarized
-\item Complexity on larger graphs
-\end{itemize}
-\section{Conclusion}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{Sections/Introduction.tex}
+\input{Sections/StateOfTheArt.tex}
+\input{Sections/ProjectRequirementsAndAnalysis.tex}
+\input{Sections/ProjectDesign.tex}
+\input{Sections/ImplementationIssues.tex}
+\input{Sections/Tests.tex}
+\input{Sections/Conclusion.tex}
 
 
 
@@ -115,7 +169,7 @@ An abstract describing what the prospectus is all about. ``Omit needless words''
 
 \newpage
 %%%%% BIBLIOGRAPHY %%%%%
-%\bibliographystyle{abbrv}
-%\bibliography{Other/references}
+\bibliographystyle{abbrv}
+\bibliography{Other/references}
 
 \end{document}

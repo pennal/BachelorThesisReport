@@ -1,0 +1,23 @@
+\section{Project requirements and Analysis}\label{sec:requirementsAndAnalysis}
+
+
+\subsection{Challenges}
+\todo[inline]{Add a small summary of the challenges}
+As previously stated, the goal of this project is to reduce the overload of information experienced by a user when searching for information online. While this is a challenge in itself, there are multiple other non-trivial challenges:
+
+\begin{itemize}
+\item {\bf Lack of structure}\\
+In general, each website is implemented in a different structure. Although the constructors are the same, there are no strict rules in how they should be used. To overcome this challenge, ad-hoc parser were created for each website, aiding in understanding how to extract the relevant information, to then be sent the the service, as discussed in section \todo{Add ref}.
+\item {\bf Integrity of information}\\
+Being as the user will mostly have to deal with documents that may hold code snippets, it is crucial not to alter the contents, in such a way that the code may be used. One of the other challenges encountered was how to keep code intact. Many websites tend to include code, which aids in the explanation of the problem at hand, and often this code is spread among multiple lines, making a simple ``split by newline'' the wrong choice when parsing the content of the page. Therefore it was crucial for the data extraction phase not to modify the content, and therefore allow for the entire snippet to be treated as one.
+
+% As previously explained, we had to write a unique parser specific to each website we wished to collect data from. This made the task of collecting code easier, as with a bit of exploration we were able to pinpoint what attributes (such as classes, tags, etc.) each website chose to use to represent the code. 
+
+\end{itemize}
+
+\subsection{Algorithm Overview}
+
+\subsubsection{LexRank}
+LexRank\cite{Erkan:2004:LGL:1622487.1622501} is an algorithm based on the principles of PageRank\cite{ilprints422}. The way LexRank works, is by obtaining the separate sentences, and modelling a graph where each vertex is a sentence, and depending on the importance, a degree of centrality is assigned. In order to determine the degree of a node, the algorithm analyses the relationship between the different parts of a text, namely sentences, and determines what relationships they have between each other. 
+\subsubsection{HoliRank}
+%HoliRank\cite{Ponz2017a}, builds on LexRank, by adding a property 

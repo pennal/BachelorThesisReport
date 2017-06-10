@@ -79,22 +79,22 @@
   <task id="t4">
     <title>Write Up</title>
     <type>group</type>
-    <start-constraint-date>2017-05-01T06:00:00.000Z</start-constraint-date>
+    <start-constraint-date>2017-05-25T06:00:00.000Z</start-constraint-date>
     <child-task idref="t21"/>
     <child-task idref="t22"/>
-    <start-no-earlier-than>2017-05-01T06:00:00.000Z</start-no-earlier-than>
+    <start-no-earlier-than>2017-05-25T06:00:00.000Z</start-no-earlier-than>
   </task>
   <task id="t6">
     <title>Learn Scala</title>
-    <effort>172800</effort>
+    <effort>230400</effort>
     <start-constraint-date>2017-02-24T07:00:00.000Z</start-constraint-date>
     <start-no-earlier-than>2017-02-24T07:00:00.000Z</start-no-earlier-than>
   </task>
   <task id="t7">
     <title>Understand STORMeD</title>
     <effort>172800</effort>
-    <start-constraint-date>2017-02-24T07:00:00.000Z</start-constraint-date>
-    <start-no-earlier-than>2017-02-24T07:00:00.000Z</start-no-earlier-than>
+    <start-constraint-date>2017-03-08T07:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2017-03-08T07:00:00.000Z</start-no-earlier-than>
   </task>
   <task id="t12">
     <title>Planning</title>
@@ -105,66 +105,67 @@
   <task id="t15">
     <title>Create Meta Model</title>
     <effort>288000</effort>
-    <start-constraint-date>2017-03-06T07:00:00.000Z</start-constraint-date>
-    <start-no-earlier-than>2017-03-06T07:00:00.000Z</start-no-earlier-than>
-  </task>
-  <task id="t17">
-    <title>Integrate With LIBRA</title>
-    <effort>201600</effort>
     <start-constraint-date>2017-03-16T07:00:00.000Z</start-constraint-date>
     <start-no-earlier-than>2017-03-16T07:00:00.000Z</start-no-earlier-than>
   </task>
+  <task id="t17">
+    <title>Integrate With LIBRA</title>
+    <effort>288000</effort>
+    <start-constraint-date>2017-03-30T06:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2017-03-30T06:00:00.000Z</start-no-earlier-than>
+  </task>
   <task id="t19">
     <title>Create summarizer</title>
-    <effort>288000</effort>
-    <start-constraint-date>2017-03-27T06:00:00.000Z</start-constraint-date>
-    <start-no-earlier-than>2017-03-27T06:00:00.000Z</start-no-earlier-than>
+    <effort>432000</effort>
+    <start-constraint-date>2017-04-13T06:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2017-04-13T06:00:00.000Z</start-no-earlier-than>
   </task>
   <task id="t21">
     <title>First Draft</title>
-    <effort>432000</effort>
-    <start-constraint-date>2017-05-01T06:00:00.000Z</start-constraint-date>
-    <start-no-earlier-than>2017-05-01T06:00:00.000Z</start-no-earlier-than>
+    <effort>259200</effort>
+    <start-constraint-date>2017-05-25T06:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2017-05-25T06:00:00.000Z</start-no-earlier-than>
   </task>
   <task id="t22">
     <title>Second Draft</title>
-    <effort>230400</effort>
-    <start-constraint-date>2017-05-22T06:00:00.000Z</start-constraint-date>
-    <start-no-earlier-than>2017-05-22T06:00:00.000Z</start-no-earlier-than>
+    <effort>288000</effort>
+    <start-constraint-date>2017-06-07T06:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2017-06-07T06:00:00.000Z</start-no-earlier-than>
   </task>
   <task id="t25">
-    <title>M1: Research</title>
+    <title>M2: Research</title>
     <type>milestone</type>
-    <start-constraint-date>2017-03-06T07:00:00.000Z</start-constraint-date>
-    <start-no-earlier-than>2017-03-06T07:00:00.000Z</start-no-earlier-than>
+    <start-constraint-date>2017-03-17T07:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2017-03-17T07:00:00.000Z</start-no-earlier-than>
   </task>
   <task id="t26">
-    <title>M2: Integration</title>
+    <title>M3: Integration</title>
     <type>milestone</type>
-    <start-constraint-date>2017-04-10T06:00:00.000Z</start-constraint-date>
-    <start-no-earlier-than>2017-04-10T06:00:00.000Z</start-no-earlier-than>
+    <start-constraint-date>2017-05-04T06:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2017-05-04T06:00:00.000Z</start-no-earlier-than>
   </task>
   <task id="t27">
-    <title>M3: Phase 2</title>
+    <title>M4: Phase 2</title>
     <type>milestone</type>
-    <start-constraint-date>2017-05-01T06:00:00.000Z</start-constraint-date>
-    <start-no-earlier-than>2017-05-01T06:00:00.000Z</start-no-earlier-than>
+    <start-constraint-date>2017-05-25T06:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2017-05-25T06:00:00.000Z</start-no-earlier-than>
   </task>
   <task id="t28">
-    <title>M4: First Draft</title>
+    <title>M5: First Draft</title>
     <type>milestone</type>
-    <start-constraint-date>2017-05-22T06:00:00.000Z</start-constraint-date>
-    <start-no-earlier-than>2017-05-22T06:00:00.000Z</start-no-earlier-than>
+    <start-constraint-date>2017-06-07T06:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2017-06-07T06:00:00.000Z</start-no-earlier-than>
   </task>
   <task id="t29">
-    <title>M5: Final Submission</title>
+    <title>M6: Final Submission</title>
     <type>milestone</type>
-    <start-constraint-date>2017-06-01T06:00:00.000Z</start-constraint-date>
-    <start-no-earlier-than>2017-06-01T06:00:00.000Z</start-no-earlier-than>
+    <start-constraint-date>2017-06-21T06:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2017-06-21T06:00:00.000Z</start-no-earlier-than>
   </task>
   <task id="t30">
     <title>Milestones</title>
     <type>group</type>
+    <child-task idref="t36"/>
     <child-task idref="t25"/>
     <child-task idref="t26"/>
     <child-task idref="t27"/>
@@ -181,15 +182,21 @@
   <task id="t33">
     <title>Phase 2: Extension</title>
     <type>group</type>
-    <start-constraint-date>2017-04-10T06:00:00.000Z</start-constraint-date>
+    <start-constraint-date>2017-05-04T06:00:00.000Z</start-constraint-date>
     <child-task idref="t34"/>
-    <start-no-earlier-than>2017-04-10T06:00:00.000Z</start-no-earlier-than>
+    <start-no-earlier-than>2017-05-04T06:00:00.000Z</start-no-earlier-than>
   </task>
   <task id="t34">
     <title>Create cross document summarizer</title>
     <effort>432000</effort>
-    <start-constraint-date>2017-04-10T06:00:00.000Z</start-constraint-date>
-    <start-no-earlier-than>2017-04-10T06:00:00.000Z</start-no-earlier-than>
+    <start-constraint-date>2017-05-04T06:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2017-05-04T06:00:00.000Z</start-no-earlier-than>
+  </task>
+  <task id="t36">
+    <title>M1: Project Start</title>
+    <type>milestone</type>
+    <start-constraint-date>2017-02-22T07:00:00.000Z</start-constraint-date>
+    <start-no-earlier-than>2017-02-22T07:00:00.000Z</start-no-earlier-than>
   </task>
   <critical-path root="-1" enabled="false" resources="false">
     <color r="1" g="0.5" b="0.5"/>
