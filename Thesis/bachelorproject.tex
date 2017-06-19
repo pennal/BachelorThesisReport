@@ -4,7 +4,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% PACKAGES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{todonotes}
 \usepackage{float}
-
+\usepackage{subcaption}
 \usepackage[cache=false]{minted}
 
 \usepackage[T1]{fontenc}
@@ -14,7 +14,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%% CUSTOM COMMANDS %%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\projectName}{\_\_PROJECT\_\_NAME\_\_}
+\newcommand{\projectName}{WebDistiller}
 
 \usemintedstyle{xcode}
 
@@ -53,7 +53,7 @@ xleftmargin=20pt
 }
 
 \newminted[htmlcode]{html}{
-linenos,
+%linenos,
 frame=lines,
 tabsize=4,
 breaklines=true,
@@ -61,7 +61,6 @@ xleftmargin=20pt
 }
 
 \newmintinline[html]{html}{
-linenos,
 frame=lines,
 breaklines=true,
 xleftmargin=20pt
@@ -78,7 +77,7 @@ xleftmargin=20pt
 }
 
 \newminted[jsoncode]{json}{
-linenos,
+%linenos,
 frame=lines,
 tabsize=4,
 breaklines=true,
@@ -86,7 +85,6 @@ xleftmargin=20pt
 }
 
 \newmintinline[json]{json}{
-linenos,
 frame=lines,
 breaklines=true,
 xleftmargin=20pt
@@ -121,41 +119,37 @@ xleftmargin=20pt
 
 
 
-\author{Your Name}
+\author{Lucas Pennati}
 
 \title{\projectName}
-\subtitle{The (optional) subtitle}
+\subtitle{Integrating a summariser into a Holistic recommender system}
 \versiondate{\today}
 
 \begin{committee}
 %With more than 1 advisor an error is raised...: only 1 advisor is allowed!
-\advisor[Universit\`a della Svizzera Italiana, Switzerland]{Prof.}{Michele}{Lanza}
+\advisor[Universit\`a della Svizzera Italiana, Switzerland]{Prof. Dr.}{Michele}{Lanza}
 %You can comment out  these lines if you don't have any assistant
 \assistant[Universit\`a della Svizzera Italiana, Switzerland]{Dr.}{Luca}{Ponzanelli}
 \assistant[Universit\`a della Svizzera Italiana, Switzerland]{Dr.}{Andrea}{Mocci}
 \end{committee}
 
-\abstract {
-An abstract describing what the prospectus is all about. ``Omit needless words'' \cite{Stru1899a}: It should fit within the page without making the footer of the title page break the page --- otherwise what kind of abstract would it be?
-}
+\abstract {\input{Sections/Abstract.tex}}
 
 
 
 
 \begin{document}
-%\maketitle
+\maketitle
+\tableofcontents
+\listoffigures\newpage
 
 % Chapters
-%\input{Sections/explanation}
-
-
-
 \input{Sections/Introduction.tex}
 \input{Sections/StateOfTheArt.tex}
 \input{Sections/ProjectRequirementsAndAnalysis.tex}
 \input{Sections/ProjectDesign.tex}
-\input{Sections/ImplementationIssues.tex}
 \input{Sections/Tests.tex}
+\input{Sections/ImplementationIssues.tex}
 \input{Sections/Conclusion.tex}
 
 

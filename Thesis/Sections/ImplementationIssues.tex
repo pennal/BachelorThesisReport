@@ -1,6 +1,6 @@
 \section{Implementation Issues}\label{sec:implementationIssues}
 
-\subsection{Limitations of approach}
+\subsection{Current Limitations}
 \subsubsection{Granularity}
 Although this approach to summarisation works, the biggest limitation is the granularity of it. As we have seen, the service is able to correctly identify the importance of each unit inside of a document or collection of documents, but what is still missing is a true summarisation of the content. More specifically, what would be interesting to achieve is a summarisation algorithm that is able to take a text, and recreate a new one by following grammar rules and keeping the context of such intact.
 
@@ -13,3 +13,5 @@ This brings the challenge of deciding what has to be kept, what has to be discar
 
 \subsubsection{Performance}
 To implement the algorithm behind \projectName, many libraries were used. These libraries tend to have their own way of doing things, which our code had to adapt to. One example is the \scala{SimilarityParameters} present in the StORMeD devkit. These parameters have to be recalculated every time a new unit is added, which requires a lot of time. If we were only to consider small graphs, this would be no problem as there is almost no impact on the general performance. Once we start to consider larger graphs, the limitations start to show, and the performance of the whole system suffers. In order to fix such issue, the devkit would have to be rewritten from scratch, which is outside the scope of this project. 
+
+\subsection{Future work}
