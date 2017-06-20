@@ -2,7 +2,7 @@
 
 
 \subsection{Challenges}
-As previously stated, the goal of this project is to reduce the overload of information experienced by a user when searching for information online. While this is a challenge in itself, there are multiple other non-trivial challenges:
+As previously stated, the goal of this project is to reduce the overload of information experienced by a developer when searching for information online. While this is a challenge in itself, there are multiple other non-trivial challenges:
 
 \begin{itemize}
 \item {\bf Lack of structure}\label{sec:lackOfStructure}\\
@@ -14,7 +14,7 @@ Users will mostly have to deal with documents that may contain code snippets. Ma
 
 \subsection{HoliRank}
 
-HoliRank\cite{Ponz2017a} is an algorithm that builds on top of LexRank\cite{Erkan:2004:LGL:1622487.1622501}, which itself is based on PageRank\cite{ilprints422}. 
+HoliRank \cite{Ponz2017a} is an algorithm that builds on top of LexRank \cite{Erkan:2004:LGL:1622487.1622501}, which itself is based on PageRank \cite{ilprints422}. 
 Before we go any further, we describe how both LexRank and PageRank work from a high level perspective. PageRank simulates a random surfer, a user which randomly surfs the web clicking on links and never going back until it gets bored and starts from another random page. This random surfer is defined by the following formula:
 
 \begin{equation}
@@ -24,4 +24,4 @@ where $d$ is a damping factor (usually set to 0.85), $M(p_i)$ is the set of all 
 
 In order to move to LexRank, some modifications are needed. Instead of considering a network of pages, the approach considers a document as a collection of sentences that form a network. Then, PageRank is applied to this network of sentences. This modification to the algorithm allows for sentences, which in theory have no proper link between them, to be connected and used. 
 
-In theory, LexRank could have been used ``as is'' to perform summarization, as most of the documents developers will consult are mainly composed of text. Issues arise when the page being viewed contains artefacts which are not purely text-based, such as code snippets. The difference between the data can cause issues when LexRank determines the similarity between the artefacts, since it does so by considering the pure textual similarity of the artefacts, which hinders the whole information provided by source code. The approach followed by HoliRank is to consider the heterogeneous nature of information in software engineering, i.e. the possibility of an artefact to be composed of either text or code. By performing this distinction, the algorithm is able to access the multiple layers of information provided by the different artefacts, since the way similarity is calculated varies depending on the type of the artefact. 
+In theory, LexRank could have been used ``as is'' to perform summarization, as most of the documents developers will consult are mainly composed of text. Issues arise when the page being viewed contains artifacts which are not purely text-based, such as code snippets. The difference between the data can cause issues when LexRank determines the similarity between the artifacts, since it does so by considering the pure textual similarity of the artifacts, which hinders the whole information provided by source code. The approach followed by HoliRank is to consider the heterogeneous nature of information in software engineering, i.e. the possibility of an artifact to be composed of either text or code. By performing this distinction, the algorithm is able to access the multiple layers of information provided by the different artifacts, since the way similarity is calculated varies depending on the type of the artifact. 

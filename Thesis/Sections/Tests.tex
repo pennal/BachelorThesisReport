@@ -1,4 +1,4 @@
-\section{Results}\label{sec:results}
+\section{User Interface}\label{sec:results}
 The goal of this project was to provide a simple way for developers to reduce information overload. It was very important that the user interface of the Chrome extension was as simple as possible to remove any possible hurdles. Figure \ref{fig:chromeExtensionInterfaceScreenshot} shows the user interface for the popup component of the Chrome extension. 
 
 \begin{figure}[H]
@@ -57,12 +57,12 @@ If an error occurs, a red icon is shown (Figure \ref{fig:chromeError}).
 When the Chrome extension has received the data back from the web service, the icon turns green and the slider is shown in the popup. The user has now the ability to choose the amount of filtration required, which updates the content of the page in real time. Any time the slider is dragged, the popup will fire an event caught by the content script, which will take care of hiding or showing the different units, depending on their sort order.
 
 
-Another feature of \projectName~is the ability to generate an overview of all the pages in a user's history. By clicking the Generate summary button from the popup (Figure \ref{fig:chromeExtensionInterfaceScreenshot}), the extension will open a new page, containing the documents. An example is shown in Figure \ref{fig:chromeExtensionSummaryScreenshot}.
+Another feature of \projectName~is the ability to generate an overview of all the pages in a user's history. By clicking the ``Generate Summary'' button from the popup (Figure \ref{fig:chromeExtensionInterfaceScreenshot}), the extension will open a new page, containing the documents. An example is shown in Figure \ref{fig:chromeExtensionSummaryScreenshot}.
+
+For each page, a slider is available to once again filter the content independently from the other pages. An additional slider is added at the top of the page, called a master slider, which controls the amount of information displayed by each site, regardless of the value chosen by each individual slider. This allows the user to consult only the highest ranked units in its history, giving a very quick overview of multiple sites at the same time.
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.3]{Figures/SummaryExample}
 \caption{Generated Summary}
 \label{fig:chromeExtensionSummaryScreenshot}
 \end{figure}
-
-For each page, a slider is available to once again filter the content independently from the other pages. An additional slider is added at the top of the page, called a master slider, which controls the amount of information displayed by each site, regardless of the value chosen by each individual slider. This allows the user to consult only the highest ranked units in its history, giving a very quick overview of multiple sites at the same time.
