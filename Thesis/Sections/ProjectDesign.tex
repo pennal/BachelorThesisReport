@@ -1,15 +1,15 @@
 \section{\projectName}\label{sec:projectDesign}
 The upcoming sections will illustrate \projectName~and all of its features. We also illustrate the decisions taken to be able to create this tool. We will start by explaining the general theory behind the approach, to then move onto the general architecture, the server side components, and then last but not least, the client side components. 
 
-
-
-
 \subsection{Overview}
-HoliRank\cite{Ponz2017b}, like PageRank\cite{ilprints422} and LexRank\cite{Erkan:2004:LGL:1622487.1622501}, calculates the degree of an entity inside a network of other entities. To represent this network, we can use graphs. We represent each entity as a separate vertex, with connections between them to indicate the similarity. 
 
-To encapsulate the information extracted from a a page, we introduce the notion of an information unit. An information unit is a piece of content extracted from a page, which can contain either code or plain text.
+A graph is a collection of nodes, which form a network. If we consider the world wide web, we can represent each page as a node inside of that network. When a connection exists from a page to another, for example with a link, we can say that the two pages are connected and an edge between them is created. 
 
-As previously stated, one of the challenges was the lack of structure in web pages. This is due to the fact that each website is structured in a different way, but uses the same constructs, such as paragraphs, sections, titles, etc. Since we needed to create separate information units for each piece of text, we started by analyzing a few websites. We decided that the best approach was to separate the content by paragraph where the content was plain text, whereas in the case of code, we kept it intact. Once these units are obtained, we add them as a vertex to a graph, and feed it to HoliRank\cite{Ponz2017b} which calculates the prominence for each unit inside the graph. 
+The same reasoning can be applied to a document. Each part of the document becomes a node, and the edges between the different nodes in the network represent the similarity between the parts of the document. To provide a relationship between the nodes and the data displayed, we introduce the notion of an information unit. An information unit is a piece of content extracted from a page, which can contain either code or plain text.
+
+In our approach, an information unit is a paragraph where the content can either be plain text, or code. The construction of the edges is the same as \cite{Ponz2015b}, and relies on the H-AST nodes composing the information units.  
+
+To create the extractive summary, a possible approach consists in using HoliRank to calculate the degree of centrality of each information unit in the graph, and then select the most central ones according to a threshold set by the user. An example of this process can be seen in Figure \ref{fig:graph}.
 
 \begin{figure}[H]
 \centering
@@ -17,17 +17,20 @@ As previously stated, one of the challenges was the lack of structure in web pag
 \caption{From website, to graph, to summary}
 \label{fig:graph}
 \end{figure} 
-In Figure \ref{fig:graph} we can see the whole process. We start by splitting the page into sections, depending on whether they are text-based, or code-based. We then add these sections to the graph, calculate the degree of centrality for each vertex, and filter the content based on the prominence of the vertex. In the next sections, we are going to explore exactly how these actions are performed
 
-In the case of multiple documents, we use the same principle as shown in Figure \ref{fig:graph}. The only difference is the origin of the content enclosed inside the vertex. The vertices are all added to the same graph, and the prominence of each is calculated in relationship to all vertices, regardless of the origin. This allows us to consider the user's history. An example is shown in Figure \ref{fig:multipleDocumentGraph}
+A major issue with this approach is the lack of context when creating the summary. In other words, the knowledge acquired by the user through the previously browsed pages is not considered while selecting the most relevant units.
+
+In our implementation, we consider the history visited by the user. We create a Context Graph ad-hoc for each user which aggregates information units from different sources. When the user visits a new page we extract the units from it, and add them to the graph. An example is shown in Figure \ref{fig:multipleDocumentGraph}.
+
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.2]{Figures/mdGraphs}
-\caption{Multi document graph}
+\caption{Context graph}
 \label{fig:multipleDocumentGraph}
 \end{figure} 
 
+In Figure \ref{fig:multipleDocumentGraph}, different sources are represented by different shapes. When calculating the degree of centrality of a certain unit, the result is not based only on the content of the page currently being viewed, but it depends on all of the other units, which represent the history of pages visited. This means that anytime a new node is added to the context graph, the degree of a specific unit changes, as the context has changed.
 
 \subsection{Architecture}\label{sec:architecture}
 The project has two main components:
@@ -44,7 +47,7 @@ Instead of relying on the end user's device to perform the calculations to deter
 \caption{Architecture of \projectName}
 \label{fig:architecture}
 \end{figure} 
-These two components interact with each other, in a typical client-server architecture, as shown in figure \ref{fig:architecture}.
+These two components interact with each other, in a typical client-server architecture, as shown in Figure \ref{fig:architecture}.
 
 
 \begin{figure}[H]
@@ -70,8 +73,6 @@ Figure \ref{fig:sequenceDiagram} shows the sequence for both the registration pr
 \item Once the data returns, the units are added to the user's graph, and the prominence is calculated
 \item Ranked units are returned to the Chrome extension, which now allows the user to manipulate the information available on the page
 \end{enumerate}
-We are now going to explore each component in greater detail.
-
 
 \subsection{Server side}
 \subsubsection{Web Service}
@@ -113,18 +114,18 @@ X-Libra-UserId: SsrktS2vrGPpHaAkYMsVDPo4qN6i38ei
       ]
     }
   ],
-  "url": "http://www.MyAwesomeWebsite.rocks"
+  "url": "http://www.mywebsite.io"
 }
 \end{jsoncode}
 \caption{Sample request from Chrome extension to web service}
 \label{lst:sampleRequest}
 \end{listing}
 
-As shown in the sequence diagram in Figure \ref{fig:sequenceDiagram}, an external call is made to the StORMeD service, an island parser which we use to construct an H-AST for all units. An Heterogeneous Abstract Syntax Tree (H-AST)\cite{Ponz2015} is a structure that is used to represent both textual fragments as well as the language of an artefact. 
+As shown in the sequence diagram in Figure \ref{fig:sequenceDiagram}, an external call is made to the StORMeD service, an island parser which we use to construct an H-AST for all units. An Heterogeneous Abstract Syntax Tree (H-AST)\cite{Ponz2017a} is a structure that is used to represent both textual fragments as well as the language of an artefact. 
 
-The service will then add the nodes to the graph, and start calculating the degree by using a library called Signal/Collect\cite{Stutz:2010:SGA:1940281.1940330}, which allows the processing of large graphs in a really quick way. By describing the HoliRank\cite{Ponz2017b} algorithm using the provided syntax, the library handles the calculations returning the degree of centrality for a certain unit. The results are then returned to the user as seen in Listing \ref{lst:sampleResponse}.
+The service will then add the nodes to the graph, and start calculating the degree by using a library called Signal/Collect\cite{Stutz:2010:SGA:1940281.1940330}, which allows the processing of large graphs in a really quick way. By describing the HoliRank algorithm using the provided syntax, the library handles the calculations returning the degree of centrality for a certain unit. The results are then returned to the user as seen in Listing \ref{lst:sampleResponse}.
 
-\begin{listing}
+\begin{listing}[H]
 \centering	
 \begin{jsoncode}
 {
@@ -132,12 +133,12 @@ The service will then add the nodes to the graph, and start calculating the degr
     {
       "idx": "-656298628_0000000001",
       "degree": 0.5,
-      "url": "http://www.MyAwesomeWebsite.rocks"
+      "url": "http://www.mywebsite.io"
     },
     {
       "idx": "-656298628_0000000002",
       "degree": 0.5,
-      "url": "http://www.MyAwesomeWebsite.rocks"
+      "url": "http://www.mywebsite.io"
     }
   ]
 }
@@ -146,14 +147,14 @@ The service will then add the nodes to the graph, and start calculating the degr
 \label{lst:sampleResponse}
 \end{listing}
 
-This information is then used by the extension to associate the index with its degree, which is then used to decide which units have to be hidden and which have to be shown depending on the value chosen by the user. This is explained in details in the next section.
+This information is then used by the extension to associate the index with its degree, which is then used to decide which units have to be hidden and which have to be shown depending on the threshold chosen by the user. This is explained in details in the next section.
 
 \subsubsection{StORMeD}
-StORMeD\cite{Ponz2015a} is an island parser capable of building the Heterogeneous Abstract Syntax Tree (H-AST) for a piece of content. In out project, we use the service to analyze the code snippets which are parsed from the page. The web service makes a call to the StORMeD service, which returns the full H-AST that is fed into HoliRank\cite{Ponz2017b}.
+StORMeD\cite{Ponz2015a} is an island parser capable of building the Heterogeneous Abstract Syntax Tree (H-AST) for a piece of content. In out project, we use the service to analyze the code snippets which are parsed from the page. The web service makes a call to the StORMeD service, which returns the full H-AST that is fed into HoliRank.
 
 \subsection{Client-side: Chrome extension}
 \subsubsection{Parser}
-The first step consists in collecting the information currently being displayed, which happens when the page has finished loading its content. As previously discussed in section \ref{sec:lackOfStructure}, one of the main challenges of this project was to handle the wide variety of structures among webpages, being as each page tends to use the same constructs but widely differ in the implementation. This hurdle was solved by implementing a parser for each of the domains for which the information was needed. 
+The first step consists in collecting the information currently being displayed, which happens when the page has finished loading its content. As previously discussed in section \ref{sec:lackOfStructure}, one of the main challenges of this project was to handle the wide variety of structures among webpages, being as each page tends to use the same HTML constructs but widely differ in the implementation. This hurdle was solved by implementing a parser for each of the domains for which the information was needed. 
 
 \begin{figure}[H]
 \centering
@@ -162,9 +163,9 @@ The first step consists in collecting the information currently being displayed,
 \label{fig:soConv}
 \end{figure}
 
-Figure \ref{fig:soConv} represents the structure of a Stack Overflow\footnote{\url{http://stackoverlow.com/}} discussion. A Stack Overflow discussion consists of a question with the related comments, and a set of answers with their own set of comments. Therefore our parser needs to first obtain the question, more specifically the paragraphs and comments that make up such question, and then repeat the task for each of the possible answers. 
+Consider a Stack Overflow discussion, as seen in Figure \ref{fig:soConv}. A Stack Overflow discussion consists of a question with the related comments, and a set of answers with their own set of comments. Therefore our parser needs to first obtain the question, more specifically the paragraphs and comments that make up such question, and then repeat the task for each of the possible answers. 
 
-Since the structure of a Stack Overflow discussion is largely different from a tutorial from DZone\footnote{\url{http://dzone.com/}} , we needed to write a parser for each website we wished to parse. To facilitate this situation, we created an an abstract parser, along with a few standard models. Due to the limitations of vanilla JavaScript, we decided to use TypeScript\footnote{\url{https://www.typescriptlang.org}}, a language developed by Microsoft which is a typed superset of JavaScript that compiles to plain JavaScript. This ensured that compatibility would not be an issue, while providing multiple useful features. We started by defining the models that would be needed to parse a page, in a very general way. A document diagram can be found in Figure \ref{fig:abstractParserClassDiagram}.
+Since the structure of a Stack Overflow discussion differs from a tutorial from DZone\footnote{\url{http://dzone.com/}} , we needed to write a parser for each website we wished to parse. To facilitate this situation, we created an an abstract parser, along with a few standard models. We used TypeScript\footnote{\url{https://www.typescriptlang.org}}, a language developed by Microsoft which is a typed superset of JavaScript that compiles to plain JavaScript. This ensured that compatibility would not be an issue, while providing multiple useful features. We started by defining the models that would be needed to parse a page, in a very general way. A document diagram can be found in Figure \ref{fig:abstractParserClassDiagram}.
 
 \begin{figure}[H]
 \centering
@@ -177,7 +178,10 @@ The ``root'' model is called \ts{LibraDocument} which provides the main methods 
 
 In our implementation of the information unit, called \ts{LibraInformationUnit}, we also store a few other useful parts such as the index of the unit and the tags attached to the DOM. 
 
-The last component is \ts{LibraPart}, which separates the multiple parts of a document. As an example, consider the Stack Overflow discussion shown in Figure \ref{fig:soConv}. We could divide the question and the answers in two separate parts, which in turn  contain other parts (i.e. the possible comments to a question or answer). 
+The last component is \ts{LibraPart}, which separates the multiple parts of a document.
+
+
+%As an example, consider the Stack Overflow discussion shown in Figure \ref{fig:soConv}. We could divide the question and the answers in two separate parts, which in turn  contain other parts (i.e. the possible comments to a question or answer). 
 
 \begin{figure}[H]
 \centering
@@ -188,12 +192,12 @@ The last component is \ts{LibraPart}, which separates the multiple parts of a do
 
 These models are then used in the abstract parser, for which the diagram is show in Figure \ref{fig:abstractParserDiagram}. This way the developer writing a new parser has to simply extend the different methods and models, quickly creating a new parser which the extension is able to understand and use. 
 
-A remark has to be made about the \ts{extractInformationUnitFromDOM} and \ts{extractInformationUnitFromInputAndTextDOM} methods. These two methods were created to keep the data extracted consistent among multiple parser implementations. The consistency is achieved by requiring the DOM element that contains the artefact to be extracted, and returning a ready to use \ts{LibraInformationUnit}. What is hidden behind this implementation is a tagging procedure that allows the Chrome extension to connect the data returned by the service with the content being displayed. To provide a unique identifier for each of the elements on the page, we used a combination of the page's URL with a global counter. The structure of this index is as follows:
+A remark has to be made about the \ts{extractInformationUnitFromInputAndTextDOM} and \\\ts{extractInformationUnitFromDOM} methods. These two methods were created to keep the data extracted consistent among multiple parser implementations. The consistency is achieved by requiring the DOM element that contains the artefact to be extracted, and returning a ready to use \ts{LibraInformationUnit}. What is hidden behind this implementation is a tagging procedure that allows the Chrome extension to connect the data returned by the service with the content being displayed. To provide a unique identifier for each of the elements on the page, we used a combination of the page's URL with a global counter. The structure of this index is as follows:
 \[
 \text{\texttt{Hash of url + "\_" + 10 digit padded counter}}
 \]
-When extracting the content of the DOM, the two previously mentioned methods inject the index into the DOM of the page as seen in Listing \ref{lst:sampleInjection}
-\begin{listing}
+When extracting the content of the DOM, the two previously mentioned methods inject the index into the DOM of the page as seen in Listing \ref{lst:sampleInjection}.
+\begin{listing}[H]
 \centering
 \begin{htmlcode}
 <pre class="lang-java prettyprint prettyprinted" libra_idx="-656298628_0000000001">
@@ -214,12 +218,12 @@ The execution of the parser is performed once the loading of the page is complet
 
 
 \subsubsection{Chrome Extension components}
-As previously stated, in order to parse the content of a certain page, send it to the service, and then manipulate it, a Chrome extension was created. Before we go any further, we need to understand the structure of a Chrome extension. A Chrome extension is divided into three components:
+A Chrome extension was created to parse the content of a page, send it to the service, and then manipulate it. The structure of a Chrome extension is divided into three components:
 \begin{itemize}
 \item \textbf{Background script}\\
 The background script runs in the background for the whole browser, and is persistent. The session is not unique to the tab, and therefore no data exclusive to a certain tab should be stored in here.
 \item \textbf{Popup}\\
-The only user facing component of the extension. It allows the developer to create a UI, which can be recalled every time the button on the right of the sidebar is clicked. It is important to notice that it is created every time the icon for the extension is clicked, and completely destroyed once the user is not interacting with it anymore. 
+The interface of the extension. It allows the developer to create a user interface, which can be recalled every time the icon of the extension is clicked. It is important to notice that it is created every time the icon for the extension is clicked, and completely destroyed once the user is not interacting with it anymore. 
 \item \textbf{Content script}\\
 The content script has access to the data currently being displayed. It is able to interact with the DOM, and its session is unique to each tab open. 
 \end{itemize}
@@ -230,7 +234,7 @@ Since each component of the extension has a different set of restrictions, the j
 \item \textbf{Content Script}\\
 The content script is responsible of loading the available parsers, as well as using the correct one for the current page. Once this is completed, the data is handed over to the background script.
 \item \textbf{Popup}\\
-The popup is shown containing a range slider, as well as a few buttons, which allow the user to interact with the information being currently displayed on the page, and to manipulate it. 
+The popup is shown containing a range slider, which allows the user to interact with the information being currently displayed on the page, and to manipulate it. 
 \item \textbf{Background script}\\
 The background script is responsible of connecting the content script with the popup, as well as making the HTTP requests to the service. 
 \end{itemize}
@@ -243,7 +247,7 @@ As previously explained, message passing is the way components communicate with 
 
 
 As we have seen in the previous section, the service returns the payload containing the different degrees of each unit. It is the task of the extension as a whole to process this information, and make it usable to the user. This is achieved by sorting the payload data, and adding in each of the units currently on the page a sort order index as seen in Listing \ref{lst:sampleSortOrderInjection}.
-\begin{listing}
+\begin{listing}[H]
 \centering
 \begin{htmlcode}
 <pre class="lang-java prettyprint prettyprinted" libra_idx="-656298628_0000000001" sortorder="15">

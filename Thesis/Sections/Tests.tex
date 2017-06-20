@@ -1,5 +1,5 @@
 \section{Results}\label{sec:results}
-The goal of this project was to provide a simple way for developers to reduce information overload. It was very important that the user interface of the Chrome extension was as simple as possible to remove any possible hurdles. Figure \ref{fig:chromeExtensionInterfaceScreenshot} shows the UI for the popup component of the Chrome extension. 
+The goal of this project was to provide a simple way for developers to reduce information overload. It was very important that the user interface of the Chrome extension was as simple as possible to remove any possible hurdles. Figure \ref{fig:chromeExtensionInterfaceScreenshot} shows the user interface for the popup component of the Chrome extension. 
 
 \begin{figure}[H]
 \centering
@@ -10,51 +10,49 @@ The goal of this project was to provide a simple way for developers to reduce in
 
 The interface consists of two main sections. The first section shows information about the current session. This was mostly used while debugging the application. The second section is used to interact with the user. The current view shows the slider, which means that the data gathering and ranking processes have completed successfully. In case of errors, or while the content script is parsing the page, the slider is hidden and messages are shown to inform the user of the current status. 
 
-An additional visual feedback is provided by the icons of the extension shown in Figure \ref{fig:chromeExtensionIcons}, which can represent any of the following states:
+An additional visual feedback is provided by the possible icons of the extension shown in Figure \ref{fig:icons}, which can represent any of the following states:
 \begin{itemize}
 \item \textbf{Inactive}\\
 Represented by a greyed out icon (Figure \ref{fig:chromeInactive}), tells the user that the extension is not active in the current website.
 \item \textbf{Parsing}\\
 While the application is parsing, a yellow icon (Figure \ref{fig:chromeParsing}) is shown to indicate that the Chrome extension is working, and the results will be shown shortly.
 \item \textbf{Ready}\\
-When the icon turns green (Figure \ref{fig:chromeParsing}), the user has the ability to open the popup and start manipulating the content by dragging the slider.
+When the icon turns green (Figure \ref{fig:chromeReady}), the user has the ability to open the popup and start manipulating the content by dragging the slider.
 \item \textbf{Error}\\
 If an error occurs, a red icon is shown (Figure \ref{fig:chromeError}). 
 \end{itemize}
-\newcommand{\figureScale}{0.15}
+\newcommand{\figureScale}{0.25}
+\newcommand{\innerScale}{0.15}
+
+
 \begin{figure}[H]
-    \centering
-    \begin{subfigure}[t]{0.25\textwidth}
-        \centering
-	\label{fig:chromeInactive}
-        \includegraphics[scale=\figureScale]{Figures/greyPlain}
-        \caption{Inactive}
-    \end{subfigure}%
-    ~ 
-    \begin{subfigure}[t]{0.25\textwidth}
-        \centering
+\centering
+\begin{subfigure}[b]{\figureScale\textwidth}
+\centering
+\includegraphics[scale=\innerScale]{Figures/greyPlain}
+\caption{Inactive}
+\label{fig:chromeInactive}
+\end{subfigure}~
+\begin{subfigure}[b]{\figureScale\textwidth}
+\centering
+\includegraphics[scale=\innerScale]{Figures/yellowPlain}
+\caption{Parsing}
 \label{fig:chromeParsing}
-        \includegraphics[scale=\figureScale]{Figures/yellowPlain}
-        \caption{Parsing}
-    \end{subfigure}%
-    ~ 
-    \begin{subfigure}[t]{0.25\textwidth}
-        \centering
+\end{subfigure}~
+\begin{subfigure}[b]{\figureScale\textwidth}
+\centering
+\includegraphics[scale=\innerScale]{Figures/greenPlain}
+\caption{Ready}
 \label{fig:chromeReady}
-        \includegraphics[scale=\figureScale]{Figures/greenPlain}
-        \caption{Ready}
-    \end{subfigure}%
-    ~ 
-    \begin{subfigure}[t]{0.25\textwidth}
-        \centering
+\end{subfigure}~
+\begin{subfigure}[b]{\figureScale\textwidth}
+\centering
+\includegraphics[scale=\innerScale]{Figures/redPlain}
+\caption{Error}
 \label{fig:chromeError}
-        \includegraphics[scale=\figureScale]{Figures/redPlain}
-        \caption{Error}
-    \end{subfigure}%
-	\label{fig:chromeExtensionIcons}
-    \caption{Chrome extension status icons}
+\end{subfigure}
+\caption{Chrome extension status icons}\label{fig:icons}
 \end{figure}
-\todo[inline]{I am not sure about this thing...looks toyish}
 
 When the Chrome extension has received the data back from the web service, the icon turns green and the slider is shown in the popup. The user has now the ability to choose the amount of filtration required, which updates the content of the page in real time. Any time the slider is dragged, the popup will fire an event caught by the content script, which will take care of hiding or showing the different units, depending on their sort order.
 

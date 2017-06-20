@@ -6,22 +6,22 @@ As previously stated, the goal of this project is to reduce the overload of info
 
 \begin{itemize}
 \item {\bf Lack of structure}\label{sec:lackOfStructure}\\
-In general, each website is implemented in a different structure. Although the constructs are the same, there are no strict rules in how they should be used. %To overcome this challenge, ad-hoc parser were created for each website, aiding in understanding how to extract the relevant information, to then be sent the the service, as discussed in section \ref{sec:architecture}.
+In general, each website is implemented in a different structure. Although the HTML constructs are the same, there are no strict rules in how they should be used. %To overcome this challenge, ad-hoc parser were created for each website, aiding in understanding how to extract the relevant information, to then be sent the the service, as discussed in section \ref{sec:architecture}.
 \item {\bf Integrity of information}\\
-Users will mostly have to deal with documents that may contain code snippets. Many websites tend to include code, which helps in the explanation of the problem at hand. Due to this heterogeneous nature of the information, these section had to be kept intact while also\todo{Someting about the type}
+Users will mostly have to deal with documents that may contain code snippets. Many websites tend to include code, which helps in the explanation of the problem at hand. Due to this heterogeneous nature of the information, these section had to be kept intact.
 
 \end{itemize}
 
 \subsection{HoliRank}
 
 HoliRank\cite{Ponz2017a} is an algorithm that builds on top of LexRank\cite{Erkan:2004:LGL:1622487.1622501}, which itself is based on PageRank\cite{ilprints422}. 
-Before we go any further, we describe how both LexRank\cite{Erkan:2004:LGL:1622487.1622501} and PageRank\cite{ilprints422} work from a high level perspective. PageRank\cite{ilprints422} simulates a random surfer, a user which randomly surfs the web clicking on links and never going back until it gets bored and starts from another random page. This random surfer is defined by the following formula:
+Before we go any further, we describe how both LexRank and PageRank work from a high level perspective. PageRank simulates a random surfer, a user which randomly surfs the web clicking on links and never going back until it gets bored and starts from another random page. This random surfer is defined by the following formula:
 
 \begin{equation}
 PR(p_i) = \frac{1-d}{N}+ d\sum\limits_{p_j\in M(p_i)}\frac{PR(p_j)}{L(p_j)}
 \end{equation}
-where $d$ is a damping factor (usually set to 0.85), $M(p_i)$ is the set of all pages that link to $p_i$, $L(p_j)$ is the number of outgoing links from $p_I$, and $N$ is the total number of pages in the network and serves as a normalisation factor. In this approach, the probability that the random surfer may visit a page represents the degree of centrality of this page in a network of pages.
+where $d$ is a damping factor (usually set to 0.85), $M(p_i)$ is the set of all pages that link to $p_i$, $L(p_j)$ is the number of outgoing links from $p_i$, and $N$ is the total number of pages in the network and serves as a normalisation factor. In this approach, the probability that the random surfer may visit a page represents the degree of centrality of this page in a network of pages.
 
-In order to move to LexRank\cite{Erkan:2004:LGL:1622487.1622501}, some modifications are needed. Instead of considering a network of pages, the approach considers a document as a collection of sentences that form a network. Then, PageRank\cite{ilprints422} is applied to this network of sentences. This modification to the algorithm allows for sentences, which in theory have no proper link between them, to be connected and used. 
+In order to move to LexRank, some modifications are needed. Instead of considering a network of pages, the approach considers a document as a collection of sentences that form a network. Then, PageRank is applied to this network of sentences. This modification to the algorithm allows for sentences, which in theory have no proper link between them, to be connected and used. 
 
-HoliRank\cite{Ponz2017a} is an algorithm that builds on LexRank\cite{Erkan:2004:LGL:1622487.1622501}, and considers the heterogeneous nature of information in software engineering. It applies the same idea as LexRank\cite{Erkan:2004:LGL:1622487.1622501}, meaning that a network of sentences is extracted from a document, with the difference that code artefacts are treated differently from purely text based artefacts.
+In theory, LexRank could have been used ``as is'' to perform summarization, as most of the documents developers will consult are mainly composed of text. Issues arise when the page being viewed contains artefacts which are not purely text-based, such as code snippets. The difference between the data can cause issues when LexRank determines the similarity between the artefacts, since it does so by considering the pure textual similarity of the artefacts, which hinders the whole information provided by source code. The approach followed by HoliRank is to consider the heterogeneous nature of information in software engineering, i.e. the possibility of an artefact to be composed of either text or code. By performing this distinction, the algorithm is able to access the multiple layers of information provided by the different artefacts, since the way similarity is calculated varies depending on the type of the artefact. 
