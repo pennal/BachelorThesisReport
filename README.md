@@ -3,7 +3,7 @@
 This repository contains all of the documentation and accompanying files for [WebDistiller](https://github.com/pennal/BachelorThesis)
 
 ## Report
-The report can be found in the `Report` subfolder. To typeset the document you need the following:
+The report can be found in the `Thesis` subfolder. To typeset the document you need the following:
 
  * Basic [LaTeX installation]('https://www.tug.org/texlive/')
  * [Pygments]('http://pygments.org') for syntax coloring
