@@ -11,7 +11,7 @@ The report can be found in the `Thesis` subfolder. To typeset the document you n
 Once ready, there is a `build.sh` script included that will take care of generating the PDF:
 
 ```bash
-cd Report
+cd Thesis
 ./build.sh
 ```
 
